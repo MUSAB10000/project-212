@@ -1,7 +1,33 @@
 public class LinkedList<T> {
     private Node<T> head;
     private Node<T> current;
+public void AddC(T val) {//add is not final version just a base to start with this is for contact only didnt run so check while runing 
+        //add direct if empty
+        if(head==null && val instanceof Contact){
+            head=new Node<Contact>((Contact)val);
+            return;
+        }
+        //add in place of head
+        if(val instanceof Contact &&((Contact)val).data.getContactName().compareTo(head.data.getContactName())<= 0){//not sure about = 
+            Node<Contact> temp=null;
+            temp=head;
+            head=new Node<Contact>((Contact)val);
+            head.next=head;
+            return;
+        }
+        //we look where to add
+        while(current.next!=null&& val instanceof Contact &&((Contact)val).data.getContactName().compareTo(current.data.getContactName())> 0){
+            current=current.next;
+        }
+              //if we get out of the while then it's one of the two either it stopped in middle found something smaller or it run through the whole list then add at last
+               Node<Contact> temp=null;
+                temp=current;
+                current=new Node<Contact>((Contact)val);
+                current.next=temp;
+    
 
+       
+    }
     public void Remove(String phone_number) {
         if (head == null) {
             return;// list is empty
