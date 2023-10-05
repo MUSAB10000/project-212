@@ -1,17 +1,17 @@
 public class Contact implements Comparable<Contact> {
     private String ContactName;
-    private int PhoneNumber;
+    private String PhoneNumber;
     private String Email;
     private String address;
     private String Birthday;
     private String notes;
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return PhoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        PhoneNumber = phoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        phoneNumber = PhoneNumber;
     }
 
     public String getContactName() {
