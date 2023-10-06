@@ -1,6 +1,9 @@
-public class LinkedList<T> {
+import java.util.Scanner;
+public class LinkedList<T> { //start LinkedList
     private Node<T> head;
     private Node<T> current;
+    public Scanner input = new Scanner(System.in);
+
 public void AddC(T val) {//add is not final version just a base to start with this is for contact only didnt run so check while runing 
         //add direct if empty
         if(head==null && val instanceof Contact){
@@ -74,4 +77,29 @@ public void AddC(T val) {//add is not final version just a base to start with th
             }
         }
     }
-}
+    public Node<T> Search(Node<T> head, int num){ //start Search
+        if (head == null)
+            return null;
+        current = head;
+        switch(num){ //start switch
+            case 1: System.out.print("Enter the contact's name:");
+                    String name = input.next();
+                    while(current != null){//start while
+                        
+                    }//end while
+                    break;
+            case 2: System.out.print("Enter the contact's name:");
+                    String phone = input.next();
+                    break;
+            case 3: System.out.print("Enter the contact's name:");
+                    String email = input.next();
+                    break;
+            case 4: System.out.print("Enter the contact's name:");
+                    String address = input.next();
+                    break;
+            case 5: System.out.print("Enter the contact's name:");
+                    String birthday = input.next();
+                    break;
+        } //end switch
+    }//end Search
+}//end LinkedList
