@@ -4,25 +4,25 @@ public class LinkedList<T> {
 public void AddC(T val) {//add is not final version just a base to start with this is for contact only didnt run so check while runing 
         //add direct if empty
         if(head==null && val instanceof Contact){
-            head=new Node<Contact>((Contact)val);
+            head=new Node<T>(val);
             return;
         }
         //add in place of head
-        if(val instanceof Contact && head instanceof Contact &&((Contact)val).data.getContactName().compareTo(((Contact)head).data.getContactName())<= 0){//not sure about = 
-            Node<Contact> temp=null;
+        if(val instanceof Contact && head.data instanceof Contact &&((Contact)val).getContactName().compareTo(((Contact)head.data).getContactName())<= 0){//not sure about = 
+            Node<T> temp=null;
             temp=head;
-            head=new Node<Contact>((Contact)val);
+            head=new Node<T>(val);
             head.next=head;
             return;
         }
         //we look where to add
-        while(current.next!=null&& val instanceof Contact && current instanceof Contact &&((Contact)val).data.getContactName().compareTo((Contact)current).data.getContactName())> 0){
+        while(current.next!=null&& val instanceof Contact && current.data instanceof Contact &&((Contact)val).compareTo((Contact)current.data)> 0){
             current=current.next;
         }
               //if we get out of the while then it's one of the two either it stopped in middle found something smaller or it run through the whole list then add at last
-               Node<Contact> temp=null;
+               Node<T> temp=null;
                 temp=current;
-                current=new Node<Contact>((Contact)val);
+                current=new Node<T>(val);
                 current.next=temp;
     
 
