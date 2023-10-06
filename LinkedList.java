@@ -8,7 +8,7 @@ public void AddC(T val) {//add is not final version just a base to start with th
             return;
         }
         //add in place of head
-        if(val instanceof Contact &&((Contact)val).data.getContactName().compareTo(head.data.getContactName())<= 0){//not sure about = 
+        if(val instanceof Contact && head instanceof Contact &&((Contact)val).data.getContactName().compareTo(((Contact)head).data.getContactName())<= 0){//not sure about = 
             Node<Contact> temp=null;
             temp=head;
             head=new Node<Contact>((Contact)val);
@@ -16,7 +16,7 @@ public void AddC(T val) {//add is not final version just a base to start with th
             return;
         }
         //we look where to add
-        while(current.next!=null&& val instanceof Contact &&((Contact)val).data.getContactName().compareTo(current.data.getContactName())> 0){
+        while(current.next!=null&& val instanceof Contact && current instanceof Contact &&((Contact)val).data.getContactName().compareTo((Contact)current).data.getContactName())> 0){
             current=current.next;
         }
               //if we get out of the while then it's one of the two either it stopped in middle found something smaller or it run through the whole list then add at last
