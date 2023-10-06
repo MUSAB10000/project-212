@@ -4,7 +4,7 @@ public class LinkedList<T> { //start LinkedList
     private Node<T> current;
     public Scanner input = new Scanner(System.in);
 
-public void AddC(T val) {//add is not final version just a base to start with this is for contact only didnt run so check while runing 
+    public void AddC(T val) {//add is not final version just a base to start with this is for contact only didnt run so check while runing 
         //add direct if empty
         if(head==null && val instanceof Contact){
             head=new Node<T>(val);
@@ -31,6 +31,7 @@ public void AddC(T val) {//add is not final version just a base to start with th
 
        
     }
+    
     public void Remove(String phone_number) {
         if (head == null) {
             return;// list is empty
@@ -77,7 +78,8 @@ public void AddC(T val) {//add is not final version just a base to start with th
             }
         }
     }
-    public Node<T> Search(Node<T> head, int num){ //start Search
+    
+    public T Search(Node<T> head, int num){ //start Search
         if (head == null)
             return null;
         current = head;
@@ -85,21 +87,46 @@ public void AddC(T val) {//add is not final version just a base to start with th
             case 1: System.out.print("Enter the contact's name:");
                     String name = input.next();
                     while(current != null){//start while
-                        
+                        if(current.data instanceof Contact && ((Contact)current.data).getContactName().equals(name))
+                        return current.data;
+                        current = current.next;
                     }//end while
                     break;
-            case 2: System.out.print("Enter the contact's name:");
+            case 2: System.out.print("Enter the contact's phone:");
                     String phone = input.next();
+                    while(current != null){//start while
+                        if(current.data instanceof Contact && ((Contact)current.data).getPhoneNumber().equals(phone))
+                        return current.data;
+                        current = current.next;
+                    }//end while
                     break;
-            case 3: System.out.print("Enter the contact's name:");
+            case 3: System.out.print("Enter the contact's email:");
                     String email = input.next();
+                    while(current != null){//start while
+                        if(current.data instanceof Contact && ((Contact)current.data).getEmail().equals(email))
+                        return current.data;
+                        current = current.next;
+                    }//end while
                     break;
-            case 4: System.out.print("Enter the contact's name:");
+            case 4: System.out.print("Enter the contact's address:");
                     String address = input.next();
+                    while(current != null){//start while
+                        if(current.data instanceof Contact && ((Contact)current.data).getAddress().equals(address))
+                        return current.data;
+                        current = current.next;
+                    }//end while
                     break;
-            case 5: System.out.print("Enter the contact's name:");
+            case 5: System.out.print("Enter the contact's birthday:");
                     String birthday = input.next();
+                    while(current != null){//start while
+                        if(current.data instanceof Contact && ((Contact)current.data).getBirthday().equals(birthday))
+                        return current.data;
+                        current = current.next;
+                    }//end while
                     break;
+            default: System.out.println("Wrong number, please do it again");
         } //end switch
+        System.out.println("Contact not found!");
+        return null;
     }//end Search
 }//end LinkedList
