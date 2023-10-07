@@ -87,40 +87,50 @@ public class LinkedList<T> { //start LinkedList
             case 1: System.out.print("Enter the contact's name:");
                     String name = input.next();
                     while(current != null){//start while
-                        if(current.data instanceof Contact && ((Contact)current.data).getContactName().equals(name))
-                        return current.data;
+                        if(current.data instanceof Contact && ((Contact)current.data).getContactName().equals(name)) {//start if
+                            System.out.println("Contact found!");
+                            return current.data;
+                        }//end if
                         current = current.next;
                     }//end while
                     break;
             case 2: System.out.print("Enter the contact's phone:");
                     String phone = input.next();
                     while(current != null){//start while
-                        if(current.data instanceof Contact && ((Contact)current.data).getPhoneNumber().equals(phone))
-                        return current.data;
+                        if(current.data instanceof Contact && ((Contact)current.data).getPhoneNumber().equals(phone)) {//start if
+                            System.out.println("Contact found!");
+                            return current.data;
+                        }//end if
                         current = current.next;
                     }//end while
                     break;
             case 3: System.out.print("Enter the contact's email:");
                     String email = input.next();
                     while(current != null){//start while
-                        if(current.data instanceof Contact && ((Contact)current.data).getEmail().equals(email))
-                        return current.data;
+                        if(current.data instanceof Contact && ((Contact)current.data).getEmail().equals(email)) {//start if
+                            System.out.println("Contact found!");
+                            return current.data;
+                        }//end if
                         current = current.next;
                     }//end while
                     break;
             case 4: System.out.print("Enter the contact's address:");
                     String address = input.next();
                     while(current != null){//start while
-                        if(current.data instanceof Contact && ((Contact)current.data).getAddress().equals(address))
-                        return current.data;
+                        if(current.data instanceof Contact && ((Contact)current.data).getAddress().equals(address)) {//start if
+                            System.out.println("Contact found!");
+                            return current.data;
+                        }//end if
                         current = current.next;
                     }//end while
                     break;
             case 5: System.out.print("Enter the contact's birthday:");
                     String birthday = input.next();
                     while(current != null){//start while
-                        if(current.data instanceof Contact && ((Contact)current.data).getBirthday().equals(birthday))
-                        return current.data;
+                        if(current.data instanceof Contact && ((Contact)current.data).getBirthday().equals(birthday)) {//start if
+                            System.out.println("Contact found!");
+                            return current.data;
+                        }//end if
                         current = current.next;
                     }//end while
                     break;
