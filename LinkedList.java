@@ -5,36 +5,124 @@ public class LinkedList<T> { // start LinkedList
     private Node<T> current;
     public Scanner input = new Scanner(System.in);
 
-    public void AddC(T val) {// add is not final version just a base to start with this is for contact only
-                             // didnt run so check while runing
-        // add direct if empty
-        if (head == null && val instanceof Contact) {
-            head = new Node<T>(val);
+    public void add(T val) {
+        if (val instanceof Contact) {
+            System.out.println(addContact((Contact) val));
             return;
         }
-        // add in place of head
-        if (val instanceof Contact && head.data instanceof Contact
-                && ((Contact) val).getContactName().compareTo(((Contact) head.data).getContactName()) <= 0) {// not sure
-                                                                                                             // about =
-            Node<T> temp = null;
-            temp = head;
-            head = new Node<T>(val);
-            head.next = head;
+        if (val instanceof Event) {
+            System.out.println(addEvent((Event) val));
             return;
         }
-        // we look where to add
-        while (current.next != null && val instanceof Contact && current.data instanceof Contact
-                && ((Contact) val).compareTo((Contact) current.data) > 0) {
-            current = current.next;
+        System.out.println("Can't add this type.");
+    }
+    
+    private String addContact(Contact c) {
+        if (head == null) {
+            head = new Node<T>((T) c);
+            return "Contact added successfully!";
         }
-        // if we get out of the while then it's one of the two either it stopped in
-        // middle found something smaller or it run through the whole list then add at
-        // last
-        Node<T> temp = null;
-        temp = current;
-        current = new Node<T>(val);
-        current.next = temp;
-
+    
+        boolean contactExists = existForNumAndName(head, c.getContactName(), c.getPhoneNumber());
+        if (contactExists)
+            return "The contact already exists.";
+    
+        if (head.getData() instanceof Contact && c.getContactName().compareTo(((Contact) head.getData()).getContactName()) <= 0) {
+            Node<T> temp = head;
+            head = new Node<T>((T) c);
+            head.setNext(temp);
+            return "Contact added successfully!";
+        }
+    
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Contact) {
+                if (c.getContactName().compareTo(((Contact) current.getData()).getContactName()) <= 0) {
+                    Node<T> temp = current;
+                    current = new Node<T>((T) c);
+                    current.setNext(temp);
+                    return "Contact added successfully!";
+                }
+            }
+            current = current.getNext();
+        }
+    
+        return "Contact not added.";
+    }
+    
+    private String addEvent(Event e) {
+        if (head == null) {
+            head = new Node<T>((T) e);
+            return "Event added successfully!";
+        }
+    
+        Contact eventContact = e.getContact_inv();
+        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(), eventContact.getPhoneNumber());
+        if (!eventContactExists)
+            return "The contact for the event does not exist.";
+    
+        boolean eventExists = eventExists(head, e);
+        if (eventExists)
+            return "The event already exists.";
+    
+        boolean dateTimeConflict = dateTimeConflict(head, e);
+        if (dateTimeConflict)
+            return "There is a date and time conflict with an existing event.";
+    
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Event&&e.getEventTitle().compareTo(((Event)(current.getData())).getEventTitle())<=0 {
+                Node<T> temp = current;
+                current = new Node<T>((T) e);
+                current.setNext(temp);
+                return "Event added successfully!";
+            }
+            current = current.getNext();
+        }
+    
+        return "Event not added.";
+    }
+    
+    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Contact) {
+                Contact contact = (Contact) current.getData();
+                if (contact.getContactName().equalsIgnoreCase(contactName) && contact.getPhoneNumber().equals(phoneNumber)) {
+                    return true;
+                }
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+    
+    private boolean eventExists(Node<T> head, Event event) {
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Event) {
+                Event existingEvent = (Event) current.getData();
+                if (existingEvent.getEventTitle().equalsIgnoreCase(event.getEventTitle())) {
+                    return true;
+                }
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+    
+    private boolean dateTimeConflict(Node<T> head, Event event) {
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Event) {
+                Event existingEvent = (Event) current.getData();
+                if (existingEvent.getDataAndTime().equals(event.getDataAndTime())) {
+                    return true;
+                }
+            }
+            current = current.getNext();
+        }
+        return false;
     }
 
     public void Remove(String phone_number) {// start remove
