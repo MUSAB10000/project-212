@@ -16,8 +16,7 @@ public class LinkedList<T> { // start LinkedList
         }
         System.out.println("Can't add this type.");
     }
-    
-    private String addContact(Contact c) {
+     private String addContact(Contact c) {
         if (head == null) {
             head = new Node<T>((T) c);
             return "Contact added successfully!";
@@ -27,17 +26,17 @@ public class LinkedList<T> { // start LinkedList
         if (contactExists)
             return "The contact already exists.";
     
-        if (head.getData() instanceof Contact && c.getContactName().compareTo(((Contact) head.getData()).getContactName()) <= 0) {
+        if (head.getData() instanceof Contact && c.compareTo(((Contact) head.getData())) > 0) {
             Node<T> temp = head;
             head = new Node<T>((T) c);
             head.setNext(temp);
             return "Contact added successfully!";
         }
     
-        Node<T> current = head;
+        current = head;
         while (current != null) {
             if (current.getData() instanceof Contact) {
-                if (c.getContactName().compareTo(((Contact) current.getData()).getContactName()) <= 0) {
+                if (c.compareTo(((Contact) current.getData())) > 0) {
                     Node<T> temp = current;
                     current = new Node<T>((T) c);
                     current.setNext(temp);
@@ -46,7 +45,9 @@ public class LinkedList<T> { // start LinkedList
             }
             current = current.getNext();
         }
-    
+        if(current==null)
+        current=head;
+
         return "Contact not added.";
     }
     
@@ -71,7 +72,7 @@ public class LinkedList<T> { // start LinkedList
     
         Node<T> current = head;
         while (current != null) {
-            if (current.getData() instanceof Event&&e.getEventTitle().compareTo(((Event)(current.getData())).getEventTitle())<=0 {
+            if (current.getData() instanceof Event&&e.getEventTitle().compareTo(((Event)(current.getData())).getEventTitle())>0) {
                 Node<T> temp = current;
                 current = new Node<T>((T) e);
                 current.setNext(temp);
@@ -79,7 +80,9 @@ public class LinkedList<T> { // start LinkedList
             }
             current = current.getNext();
         }
-    
+        if(current==null)
+        current=head;
+        
         return "Event not added.";
     }
     
