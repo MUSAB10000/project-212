@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class LinkedList<T> { // start LinkedList
     private Node<T> head;
     private Node<T> current;
-    public Scanner input = new Scanner(System.in);
+    
 
     public void add(T val) {
         if (val instanceof Contact) {
@@ -16,7 +16,8 @@ public class LinkedList<T> { // start LinkedList
         }
         System.out.println("Can't add this type.");
     }
-     private String addContact(Contact c) {
+    
+    private String addContact(Contact c) {
         if (head == null) {
             head = new Node<T>((T) c);
             return "Contact added successfully!";
@@ -45,10 +46,9 @@ public class LinkedList<T> { // start LinkedList
             }
             current = current.getNext();
         }
-        if(current==null)
-        current=head;
+        current.setNext(new Node<T>((T) c));
 
-        return "Contact not added.";
+        return "Contact added successfully!";
     }
     
     private String addEvent(Event e) {
@@ -80,10 +80,9 @@ public class LinkedList<T> { // start LinkedList
             }
             current = current.getNext();
         }
-        if(current==null)
-        current=head;
+       current.setNext(new Node<T>((T) e));
         
-        return "Event not added.";
+       return "Event added successfully!";
     }
     
     private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
