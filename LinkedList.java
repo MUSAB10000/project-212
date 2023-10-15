@@ -66,7 +66,7 @@ public class LinkedList<T> { // start LinkedList
         Contact eventContact = e.getContact_inv();
         boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
                 eventContact.getPhoneNumber());
-        if (eventContactExists)
+        if (!eventContactExists)
             return "The contact for the event does not exist.";
 
         boolean dateTimeConflict = dateTimeConflict(head, e);
@@ -82,7 +82,8 @@ public class LinkedList<T> { // start LinkedList
         current = head;
         Node<T> prev = null;
         while (current != null) {
-            if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
+            if (current.getData() instanceof Event
+                    && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
                 Node<T> temp = new Node<T>((T) e);
                 temp.setNext(current);
                 prev.setNext(temp);
@@ -99,10 +100,32 @@ public class LinkedList<T> { // start LinkedList
     }
 
     private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
-        if (SearchContact(head, contactName, 1) == null || SearchContact(head, phoneNumber, 2) == null)
-            return false;
-        else
-            return true;
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Contact) {
+                Contact contact = (Contact) current.getData();
+                if (contact.getContactName().equalsIgnoreCase(contactName)
+                        && contact.getPhoneNumber().equals(phoneNumber)) {
+                    return true;
+                }
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+
+    private boolean eventExists(Node<T> head, Event event) {
+        Node<T> current = head;
+        while (current != null) {
+            if (current.getData() instanceof Event) {
+                Event existingEvent = (Event) current.getData();
+                if (existingEvent.getEventTitle().equalsIgnoreCase(event.getEventTitle())) {
+                    return true;
+                }
+            }
+            current = current.getNext();
+        }
+        return false;
     }
 
     private boolean dateTimeConflict(Node<T> head, Event event) {
