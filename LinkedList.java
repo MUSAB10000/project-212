@@ -35,18 +35,21 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) c);
             head.setNext(temp);
             return "Contact added successfully!";
-        }
-
+        } 
+ 
         current = head;
+        Node<T> Prev=null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
-                    Node<T> temp = current;
-                    current = new Node<T>((T) c);
-                    current.setNext(temp);
+                    Node<T> temp = new Node<T>((T) c);
+                    temp.setNext(current);
+                    prev.setNexy(temp) ;
+                    current=temp;
                     return "Contact added successfully!";
                 }
             }
+            prev=current;
             current = current.getNext();
         }
         current.setNext(new Node<T>((T) c));
@@ -78,9 +81,10 @@ public class LinkedList<T> { // start LinkedList
         while (current != null) {
             if (current.getData() instanceof Event
                     && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
-                Node<T> temp = current;
-                current = new Node<T>((T) e);
-                current.setNext(temp);
+                    Node<T> temp = new Node<T>((T) c);
+                    temp.setNext(current);
+                    prev.setNexy(temp) ;
+                    current=temp;
                 return "Event added successfully!";
             }
             current = current.getNext();
