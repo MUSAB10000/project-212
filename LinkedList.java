@@ -38,7 +38,7 @@ public class LinkedList<T> { // start LinkedList
         } 
  
         current = head;
-        Node<T> Prev=null;
+        Node<T> prev=null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
@@ -76,8 +76,8 @@ public class LinkedList<T> { // start LinkedList
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict)
             return "There is a date and time conflict with an existing event.";
-
-        Node<T> current = head;
+        Node<T> prev=null;
+        current = head;
         while (current != null) {
             if (current.getData() instanceof Event
                     && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
@@ -87,6 +87,7 @@ public class LinkedList<T> { // start LinkedList
                     current=temp;
                 return "Event added successfully!";
             }
+            prev=current;
             current = current.getNext();
         }
         current.setNext(new Node<T>((T) e));
