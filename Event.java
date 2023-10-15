@@ -1,5 +1,6 @@
 import java.util.Date;
-public class Event {
+
+public class Event implements Comparable<Event> {
 	private String EventTitle, Location, ContactName;
 	private Date DataAndTime;
 	private Contact Contact_inv;
@@ -51,5 +52,9 @@ public class Event {
 	public void setContact_inv(Contact Contact_inv) {
 		this.Contact_inv = Contact_inv;
 	}
-	
+
+	@Override
+	public int compareTo(Event other) {
+		return this.EventTitle.compareTo(other.getEventTitle());
+	}
 }

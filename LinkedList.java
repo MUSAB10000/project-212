@@ -1,4 +1,5 @@
 import java.util.Date;
+
 public class LinkedList<T> { // start LinkedList
     private Node<T> head;
     private Node<T> current;
@@ -37,18 +38,18 @@ public class LinkedList<T> { // start LinkedList
         }
 
         current = head;
-        Node<T> prev=null;
+        Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
                     Node<T> temp = new Node<T>((T) c);
                     temp.setNext(current);
-                    prev.setNext(temp) ;
-                    current=temp;
+                    prev.setNext(temp);
+                    current = temp;
                     return "Contact added successfully!";
                 }
             }
-            prev=current;
+            prev = current;
             current = current.getNext();
         }
         current.setNext(new Node<T>((T) c));
@@ -65,64 +66,43 @@ public class LinkedList<T> { // start LinkedList
         Contact eventContact = e.getContact_inv();
         boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
                 eventContact.getPhoneNumber());
-        if (!eventContactExists)
+        if (eventContactExists)
             return "The contact for the event does not exist.";
-
-        boolean eventExists = eventExists(head, e);
-        if (eventExists)
-            return "The event already exists.";
 
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict)
             return "There is a date and time conflict with an existing event.";
 
+        if (head.getData() instanceof Event && e.compareTo(((Event) head.getData())) > 0) {
+            Node<T> temp = head;
+            head = new Node<T>((T) e);
+            head.setNext(temp);
+            return "Event added successfully!";
+        }
         current = head;
         Node<T> prev = null;
         while (current != null) {
-            if (current.getData() instanceof Event
-                    && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
-                    Node<T> temp = new Node<T>((T) e);
-                    temp.setNext(current);
-                    prev.setNext(temp) ;
-                    current=temp;
+            if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
+                Node<T> temp = new Node<T>((T) e);
+                temp.setNext(current);
+                prev.setNext(temp);
+                current = temp;
                 return "Event added successfully!";
             }
-            prev=current;
+            prev = current;
             current = current.getNext();
         }
         current.setNext(new Node<T>((T) e));
 
         return "Event added successfully!";
-    
+
     }
 
     private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
-        Node<T> current = head;
-        while (current != null) {
-            if (current.getData() instanceof Contact) {
-                Contact contact = (Contact) current.getData();
-                if (contact.getContactName().equalsIgnoreCase(contactName)
-                        && contact.getPhoneNumber().equals(phoneNumber)) {
-                    return true;
-                }
-            }
-            current = current.getNext();
-        }
-        return false;
-    }
-
-    private boolean eventExists(Node<T> head, Event event) {
-        Node<T> current = head;
-        while (current != null) {
-            if (current.getData() instanceof Event) {
-                Event existingEvent = (Event) current.getData();
-                if (existingEvent.getEventTitle().equalsIgnoreCase(event.getEventTitle())) {
-                    return true;
-                }
-            }
-            current = current.getNext();
-        }
-        return false;
+        if (SearchContact(head, contactName, 1) == null || SearchContact(head, phoneNumber, 2) == null)
+            return false;
+        else
+            return true;
     }
 
     private boolean dateTimeConflict(Node<T> head, Event event) {
@@ -132,23 +112,22 @@ public class LinkedList<T> { // start LinkedList
                 Event existingEvent = (Event) current.getData();
                 if (0 == existingEvent.getDataAndTime().compareTo(event.getDataAndTime()))
                     return true;
-            }
-            else 
-            current = current.getNext();
+            } else
+                current = current.getNext();
         }
         return false;
     }
-    
-    
 
     public void Remove(String phone_number) {// start remove
         if (head == null) {
+            System.out.println("Contact not found");
             return;
         } else if (head.data instanceof Contact) {
             if (((Contact) head.data).getPhoneNumber().equalsIgnoreCase(phone_number)) {
                 String ContactEventname = ((Contact) head.data).getContactName();
                 removeEvent(ContactEventname);// caling method
                 head = head.next;
+                System.out.println("delete contact ");
                 return;
             }
         }
@@ -159,6 +138,7 @@ public class LinkedList<T> { // start LinkedList
                     String ContactEventname = ((Contact) head.data).getContactName();
                     removeEvent(ContactEventname);
                     current.next = current.next.next;
+                    System.out.println("delete contact ");
                     return;// delete contact
                 }
             }
@@ -186,15 +166,19 @@ public class LinkedList<T> { // start LinkedList
         }
     }// end remove event from contact
 
-    public T SearchContact(Node<T> head, String name , int num) { // start SearchContact
-        if (head == null)
+    public T SearchContact(Node<T> head, String name, int num) { // start SearchContact
+        if (head == null) {
+            System.out.println("Contact not found");
             return null;
+        }
         current = head;
         switch (num) { // start switch
             case 1:
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getContactName().equals(name)) {// start if
+                    if (current.data instanceof Contact && ((Contact) current.data).getContactName().equals(name)) {// start
+                                                                                                                    // if
                         System.out.println("Contact found!");
+                        PrintContact(current);
                         return current.data;
                     } // end if
                     current = current.next;
@@ -202,8 +186,10 @@ public class LinkedList<T> { // start LinkedList
                 break;
             case 2:
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getPhoneNumber().equals(name)) {// start if
+                    if (current.data instanceof Contact && ((Contact) current.data).getPhoneNumber().equals(name)) {// start
+                                                                                                                    // if
                         System.out.println("Contact found!");
+                        PrintContact(current);
                         return current.data;
                     } // end if
                     current = current.next;
@@ -211,8 +197,10 @@ public class LinkedList<T> { // start LinkedList
                 break;
             case 3:
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getEmail().equals(name)) {// start if
+                    if (current.data instanceof Contact && ((Contact) current.data).getEmail().equals(name)) {// start
+                                                                                                              // if
                         System.out.println("Contact found!");
+                        PrintContact(current);
                         return current.data;
                     } // end if
                     current = current.next;
@@ -220,8 +208,10 @@ public class LinkedList<T> { // start LinkedList
                 break;
             case 4:
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getAddress().equals(name)) {// start if
+                    if (current.data instanceof Contact && ((Contact) current.data).getAddress().equals(name)) {// start
+                                                                                                                // if
                         System.out.println("Contact found!");
+                        PrintContact(current);
                         return current.data;
                     } // end if
                     current = current.next;
@@ -229,8 +219,10 @@ public class LinkedList<T> { // start LinkedList
                 break;
             case 5:
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getBirthday().equals(name)) {// start if
+                    if (current.data instanceof Contact && ((Contact) current.data).getBirthday().equals(name)) {// start
+                                                                                                                 // if
                         System.out.println("Contact found!");
+                        PrintContact(current);
                         return current.data;
                     } // end if
                     current = current.next;
@@ -240,17 +232,18 @@ public class LinkedList<T> { // start LinkedList
         System.out.println("Contact not found!");
         return null;
     }// end Search
-    
-    public void PrintEvent(Node<T> head, String name , int num) { // start PrintEvent
-        if (head == null){ // start if
-        System.out.println("Event not found!");
-            return ;
-        }//end if
+
+    public void PrintEvent(Node<T> head, String name, int num) { // start PrintEvent
+        if (head == null) { // start if
+            System.out.println("Event not found!");
+            return;
+        } // end if
         current = head;
         switch (num) { // start switch
             case 1:
-            while (current != null) {// start while
-                    if (current.data instanceof Event && ((Event) current.data).getContactName().equals(name)) {// start if
+                while (current != null) {// start while
+                    if (current.data instanceof Event && ((Event) current.data).getContactName().equals(name)) {// start
+                                                                                                                // if
                         System.out.println("Event found!");
                         break;
                     } // end if
@@ -258,7 +251,8 @@ public class LinkedList<T> { // start LinkedList
                 break;
             case 2:
                 while (current != null) {// start while
-                    if (current.data instanceof Event && ((Event) current.data).getEventTitle().equals(name)) {// start if
+                    if (current.data instanceof Event && ((Event) current.data).getEventTitle().equals(name)) {// start
+                                                                                                               // if
                         System.out.println("Event found!");
                         break;
                     } // end if
@@ -266,24 +260,35 @@ public class LinkedList<T> { // start LinkedList
                 break;
         } // end switch
         if (current == null)
-        return;
-        System.out.println("Event title:" + ((Event)current.data).getEventTitle());
-        System.out.println("Contact name:" + ((Event)current.data).getContactName());
-        System.out.println("Event date and time (MM/DD/YYYY HH:MM):" + ((Event)current.data).getDataAndTime());
-         System.out.println("Event Location:" + ((Event)current.data).getLocation());
+            return;
+        System.out.println("Event title:" + ((Event) current.data).getEventTitle());
+        System.out.println("Contact name:" + ((Event) current.data).getContactName());
+        System.out.println("Event date and time (MM/DD/YYYY HH:MM):" + ((Event) current.data).getDataAndTime());
+        System.out.println("Event Location:" + ((Event) current.data).getLocation());
     } // end PrintEvent
+
     public void PrintAllEvent() {
         if (head == null)
-        return;
+            return;
         current = head;
-        while (current != null){
-        if (current.data instanceof Event){
-        System.out.println("Event title:" + ((Event)current.data).getEventTitle());
-        System.out.println("Contact name:" + ((Event)current.data).getContactName());
-        System.out.println("Event date and time (MM/DD/YYYY HH:MM):" + ((Event)current.data).getDataAndTime());
-        System.out.println("Event Location:" + ((Event)current.data).getLocation());
+        while (current != null) {
+            if (current.data instanceof Event) {
+                System.out.println("Event title:" + ((Event) current.data).getEventTitle());
+                System.out.println("Contact name:" + ((Event) current.data).getContactName());
+                System.out.println("Event date and time (MM/DD/YYYY HH:MM):" + ((Event) current.data).getDataAndTime());
+                System.out.println("Event Location:" + ((Event) current.data).getLocation());
+            }
+            current = current.next;
         }
-        current =current.next;
-        }
+    }
+
+    private void PrintContact(Node<T> temp) {
+        System.out.println("Name:" + ((Contact) temp.data).getContactName());
+        System.out.println("Phone Number:" + ((Contact) temp.data).getPhoneNumber());
+        System.out.println("Email Address:" + ((Contact) temp.data).getEmail());
+        System.out.println("Address:" + ((Contact) temp.data).getAddress());
+        System.out.println("Birthday:" + ((Contact) temp.data).getBirthday());
+        System.out.println("Notes:" + ((Contact) temp.data).getNotes());
+
     }
 } // end LinkedList

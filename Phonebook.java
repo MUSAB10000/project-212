@@ -68,22 +68,22 @@ public class Phonebook {
                             contact.SearchContact(contact.getHead(), name, choice2);
                             break;
                         case 2:
-                            System.out.println("Enter the contact's name:");
+                            System.out.println("Enter the contact's phone number:");
                             phoneNumber = input.next();
                             contact.SearchContact(contact.getHead(), phoneNumber, choice2);
                             break;
                         case 3:
-                            System.out.println("Enter the contact's name:");
+                            System.out.println("Enter the contact's email address:");
                             email = input.next();
                             contact.SearchContact(contact.getHead(), email, choice2);
                             break;
                         case 4:
-                            System.out.println("Enter the contact's name:");
+                            System.out.println("Enter the contact's address: ");
                             address = input.next();
                             contact.SearchContact(contact.getHead(), address, choice2);
                             break;
                         case 5:
-                            System.out.println("Enter the contact's name:");
+                            System.out.println("Enter the contact's birthday: ");
                             birthday = input.next();
                             contact.SearchContact(contact.getHead(), birthday, choice2);
                             break;
