@@ -1,12 +1,13 @@
 public class Event {
 	private String EventTitle, DataAndTime, Location;
-	private Contact Contact_inv;
+	private String ContactName;
+	1 // fix it later
 
-	public Event(String eventTitle, String dateAndTime, String location, Contact contactInvolved) {
+	public Event(String eventTitle, String dateAndTime, String location, String contactName) {
 		this.EventTitle = eventTitle;
 		this.DataAndTime = dateAndTime;
 		this.Location = location;
-		this.Contact_inv = contactInvolved;
+		this.ContactName = contactName;
 	}
 
 	public String getEventTitle() {
@@ -33,11 +34,11 @@ public class Event {
 		Location = location;
 	}
 
-	public Contact getContact_inv() {
-		return Contact_inv;
+	public String getContactName() {
+		return ContactName;
 	}
 
-	public void setContact_inv(Contact contact_inv) {
-		Contact_inv = contact_inv;
+	public void setContact_inv(String contactName) {
+		ContactName = contactName;
 	}
 }

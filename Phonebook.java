@@ -50,6 +50,7 @@ public class Phonebook {
                 int choice2 = input.nextInt();
                 contact.Search(contact.getHead(), choice2);
                 break;
+                1 // معتمد احطها خطأ
             case 3:
                 System.out.println("Enter phone number to delete a contact");
                 String phone = input.nextLine();

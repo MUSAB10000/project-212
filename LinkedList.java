@@ -179,17 +179,14 @@ public class LinkedList<T> { // start LinkedList
         }
     }// end remove event from contact
 
-    public T Search(Node<T> head, int num) { // start Search
+    public T SearchContact(Node<T> head, String name , int num) { // start SearchContact
         if (head == null)
             return null;
         current = head;
         switch (num) { // start switch
             case 1:
-                System.out.print("Enter the contact's name:");
-                String name = input.next();
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getContactName().equals(name)) {// start
-                                                                                                                    // if
+                    if (current.data instanceof Contact && ((Contact) current.data).getContactName().equals(name)) {// start if
                         System.out.println("Contact found!");
                         return current.data;
                     } // end if
@@ -197,11 +194,8 @@ public class LinkedList<T> { // start LinkedList
                 } // end while
                 break;
             case 2:
-                System.out.print("Enter the contact's phone:");
-                String phone = input.next();
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getPhoneNumber().equals(phone)) {// start
-                                                                                                                     // if
+                    if (current.data instanceof Contact && ((Contact) current.data).getPhoneNumber().equals(name)) {// start if
                         System.out.println("Contact found!");
                         return current.data;
                     } // end if
@@ -209,11 +203,8 @@ public class LinkedList<T> { // start LinkedList
                 } // end while
                 break;
             case 3:
-                System.out.print("Enter the contact's email:");
-                String email = input.next();
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getEmail().equals(email)) {// start
-                                                                                                               // if
+                    if (current.data instanceof Contact && ((Contact) current.data).getEmail().equals(name)) {// start if
                         System.out.println("Contact found!");
                         return current.data;
                     } // end if
@@ -221,11 +212,8 @@ public class LinkedList<T> { // start LinkedList
                 } // end while
                 break;
             case 4:
-                System.out.print("Enter the contact's address:");
-                String address = input.next();
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getAddress().equals(address)) {// start
-                                                                                                                   // if
+                    if (current.data instanceof Contact && ((Contact) current.data).getAddress().equals(name)) {// start if
                         System.out.println("Contact found!");
                         return current.data;
                     } // end if
@@ -233,11 +221,8 @@ public class LinkedList<T> { // start LinkedList
                 } // end while
                 break;
             case 5:
-                System.out.print("Enter the contact's birthday:");
-                String birthday = input.next();
                 while (current != null) {// start while
-                    if (current.data instanceof Contact && ((Contact) current.data).getBirthday().equals(birthday)) {// start
-                                                                                                                     // if
+                    if (current.data instanceof Contact && ((Contact) current.data).getBirthday().equals(name)) {// start if
                         System.out.println("Contact found!");
                         return current.data;
                     } // end if
@@ -250,4 +235,33 @@ public class LinkedList<T> { // start LinkedList
         System.out.println("Contact not found!");
         return null;
     }// end Search
-}// end LinkedList
+    
+    public void PrintEvent(Node<T> head, String name , int num) { // start PrintEvent
+        if (head == null){ // start if
+        System.out.println("Event not found!");
+            return ;
+        }//end if
+        current = head;
+        switch (num) { // start switch
+            case 1:
+            while (current != null) {// start while
+                    if (current.data instanceof Event && ((Event) current.data).getContactName().equals(name)) {// start if
+                        System.out.println("Event found!");
+                        break;
+                    } // end if
+                } // end while
+                break;
+            case 2:
+                while (current != null) {// start while
+                    if (current.data instanceof Event && ((Event) current.data).getEventTitle().equals(name)) {// start if
+                        System.out.println("Event found!");
+                        break;
+                    } // end if
+                } // end while
+                break;
+        } // end switch
+        if (current == null)
+        return;
+        System.out.println("Event title:" + ((Event)current.data).getEventTitle());
+    } // end PrintEvent
+} // end LinkedList
