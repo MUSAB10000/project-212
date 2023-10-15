@@ -3,7 +3,10 @@ import java.util.Scanner;
 public class LinkedList<T> { // start LinkedList
     private Node<T> head;
     private Node<T> current;
-    
+
+    public Node<T> getHead() {
+        return head;
+    }
 
     public void add(T val) {
         if (val instanceof Contact) {
@@ -16,24 +19,24 @@ public class LinkedList<T> { // start LinkedList
         }
         System.out.println("Can't add this type.");
     }
-    
+
     private String addContact(Contact c) {
         if (head == null) {
             head = new Node<T>((T) c);
             return "Contact added successfully!";
         }
-    
+
         boolean contactExists = existForNumAndName(head, c.getContactName(), c.getPhoneNumber());
         if (contactExists)
             return "The contact already exists.";
-    
+
         if (head.getData() instanceof Contact && c.compareTo(((Contact) head.getData())) > 0) {
             Node<T> temp = head;
             head = new Node<T>((T) c);
             head.setNext(temp);
             return "Contact added successfully!";
         }
-    
+
         current = head;
         while (current != null) {
             if (current.getData() instanceof Contact) {
@@ -50,29 +53,31 @@ public class LinkedList<T> { // start LinkedList
 
         return "Contact added successfully!";
     }
-    
+
     private String addEvent(Event e) {
         if (head == null) {
             head = new Node<T>((T) e);
             return "Event added successfully!";
         }
-    
+
         Contact eventContact = e.getContact_inv();
-        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(), eventContact.getPhoneNumber());
+        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
+                eventContact.getPhoneNumber());
         if (!eventContactExists)
             return "The contact for the event does not exist.";
-    
+
         boolean eventExists = eventExists(head, e);
         if (eventExists)
             return "The event already exists.";
-    
+
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict)
             return "There is a date and time conflict with an existing event.";
-    
+
         Node<T> current = head;
         while (current != null) {
-            if (current.getData() instanceof Event&&e.getEventTitle().compareTo(((Event)(current.getData())).getEventTitle())>0) {
+            if (current.getData() instanceof Event
+                    && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
                 Node<T> temp = current;
                 current = new Node<T>((T) e);
                 current.setNext(temp);
@@ -80,17 +85,18 @@ public class LinkedList<T> { // start LinkedList
             }
             current = current.getNext();
         }
-       current.setNext(new Node<T>((T) e));
-        
-       return "Event added successfully!";
+        current.setNext(new Node<T>((T) e));
+
+        return "Event added successfully!";
     }
-    
+
     private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
         Node<T> current = head;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 Contact contact = (Contact) current.getData();
-                if (contact.getContactName().equalsIgnoreCase(contactName) && contact.getPhoneNumber().equals(phoneNumber)) {
+                if (contact.getContactName().equalsIgnoreCase(contactName)
+                        && contact.getPhoneNumber().equals(phoneNumber)) {
                     return true;
                 }
             }
@@ -98,7 +104,7 @@ public class LinkedList<T> { // start LinkedList
         }
         return false;
     }
-    
+
     private boolean eventExists(Node<T> head, Event event) {
         Node<T> current = head;
         while (current != null) {
@@ -112,7 +118,7 @@ public class LinkedList<T> { // start LinkedList
         }
         return false;
     }
-    
+
     private boolean dateTimeConflict(Node<T> head, Event event) {
         Node<T> current = head;
         while (current != null) {
@@ -132,7 +138,8 @@ public class LinkedList<T> { // start LinkedList
             return;
         } else if (head.data instanceof Contact) {
             if (((Contact) head.data).getPhoneNumber().equalsIgnoreCase(phone_number)) {
-                removeEvent(head);// caling method
+                String ContactEventname = ((Contact) head.data).getContactName();
+                removeEvent(ContactEventname);// caling method
                 head = head.next;
                 return;
             }
@@ -141,7 +148,8 @@ public class LinkedList<T> { // start LinkedList
         while (current.next != null) {
             if (current.next.data instanceof Contact) {
                 if (((Contact) current.next.data).getPhoneNumber().equalsIgnoreCase(phone_number)) {
-                    removeEvent(current.next);
+                    String ContactEventname = ((Contact) head.data).getContactName();
+                    removeEvent(ContactEventname);
                     current.next = current.next.next;
                     return;// delete contact
                 }
@@ -150,27 +158,24 @@ public class LinkedList<T> { // start LinkedList
         }
     }// end remove
 
-    private void removeEvent(Node<T> ContactEvent) { // start remove event from contact
-        if (ContactEvent.data instanceof Contact) {
-            String ContactEventname = ((Contact) ContactEvent.data).getContactName();
-            Node<T> eventNode = head;
-            if (eventNode == null) {
-                return;
-            }
-            if (eventNode.data instanceof Event) {// check for first one
-                if (((Event) eventNode.data).getContact_inv().getContactName().equalsIgnoreCase(ContactEventname)) {
-                    eventNode = eventNode.next;
-                }
-            }
-            while (eventNode.next != null) {
-                if (eventNode.next.data instanceof Event) {
-                    if (((Event) eventNode.next.data).getContact_inv().getContactName()
-                            .equalsIgnoreCase(ContactEventname)) {
-                        eventNode.next = eventNode.next.next;
-                    }
-                }
+    private void removeEvent(String ContactEvent) { // start remove event from contact
+        Node<T> eventNode = head;
+        if (eventNode == null) {
+            return;
+        }
+        if (eventNode.data instanceof Event) {// check for first one
+            if (((Event) eventNode.data).getContact_inv().getContactName().equalsIgnoreCase(ContactEvent)) {
                 eventNode = eventNode.next;
             }
+        }
+        while (eventNode.next != null) {
+            if (eventNode.next.data instanceof Event) {
+                if (((Event) eventNode.next.data).getContact_inv().getContactName()
+                        .equalsIgnoreCase(ContactEvent)) {
+                    eventNode.next = eventNode.next.next;
+                }
+            }
+            eventNode = eventNode.next;
         }
     }// end remove event from contact
 

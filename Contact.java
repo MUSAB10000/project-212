@@ -6,6 +6,21 @@ public class Contact implements Comparable<Contact> {
     private String Birthday;
     private String notes;
 
+    public Contact(String contactName, String phoneNumber, String email, String address, String birthday,
+            String notes) {
+        this.ContactName = contactName;
+        this.PhoneNumber = phoneNumber;
+        this.Email = email;
+        this.address = address;
+        this.Birthday = birthday;
+        this.notes = notes;
+    }
+
+    public Contact(String contactName) {
+        this.ContactName = contactName;
+
+    }
+
     public String getPhoneNumber() {
         return PhoneNumber;
     }
