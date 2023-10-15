@@ -1,5 +1,6 @@
 public class test {
     public static void main(String[] args) {
-        System.out.println("hello");
+        Phonebook p = new Phonebook();
+        p.display();
     }
 }
