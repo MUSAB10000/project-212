@@ -1,12 +1,13 @@
+Import java.util.Date;
 public class Contact implements Comparable<Contact> {
     private String ContactName;
     private String PhoneNumber;
     private String Email;
     private String address;
-    private String Birthday;
+    private Date Birthday;
     private String notes;
 
-    public Contact(String contactName, String phoneNumber, String email, String address, String birthday,
+    public Contact(String contactName, String phoneNumber, String email, String address, Date birthday,
             String notes) {
         this.ContactName = contactName;
         this.PhoneNumber = phoneNumber;
@@ -53,11 +54,11 @@ public class Contact implements Comparable<Contact> {
         this.address = address;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return Birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         Birthday = birthday;
     }
 
