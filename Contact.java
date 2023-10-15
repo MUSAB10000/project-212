@@ -4,10 +4,10 @@ public class Contact implements Comparable<Contact> {
     private String PhoneNumber;
     private String Email;
     private String address;
-    private Date Birthday;
+    private String Birthday;
     private String notes;
 
-    public Contact(String contactName, String phoneNumber, String email, String address, Date birthday,
+    public Contact(String contactName, String phoneNumber, String email, String address, String birthday,
             String notes) {
         this.ContactName = contactName;
         this.PhoneNumber = phoneNumber;
@@ -54,11 +54,11 @@ public class Contact implements Comparable<Contact> {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return Birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         Birthday = birthday;
     }
 

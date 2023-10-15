@@ -1,5 +1,4 @@
-import java.util.Scanner;
-
+import java.util.Date;
 public class LinkedList<T> { // start LinkedList
     private Node<T> head;
     private Node<T> current;
@@ -35,16 +34,16 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) c);
             head.setNext(temp);
             return "Contact added successfully!";
-        } 
- 
+        }
+
         current = head;
-        Node<T> Prev=null;
+        Node<T> prev=null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
                     Node<T> temp = new Node<T>((T) c);
                     temp.setNext(current);
-                    prev.setNexy(temp) ;
+                    prev.setNext(temp) ;
                     current=temp;
                     return "Contact added successfully!";
                 }
@@ -77,21 +76,24 @@ public class LinkedList<T> { // start LinkedList
         if (dateTimeConflict)
             return "There is a date and time conflict with an existing event.";
 
-        Node<T> current = head;
+        Node<T> prev=null;
+        current = head;
         while (current != null) {
             if (current.getData() instanceof Event
                     && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
-                    Node<T> temp = new Node<T>((T) c);
+                    Node<T> temp = new Node<T>((T) e);
                     temp.setNext(current);
-                    prev.setNexy(temp) ;
+                    prev.setNext(temp) ;
                     current=temp;
                 return "Event added successfully!";
             }
+            prev=current;
             current = current.getNext();
         }
         current.setNext(new Node<T>((T) e));
 
         return "Event added successfully!";
+    
     }
 
     private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
@@ -128,14 +130,16 @@ public class LinkedList<T> { // start LinkedList
         while (current != null) {
             if (current.getData() instanceof Event) {
                 Event existingEvent = (Event) current.getData();
-                if (existingEvent.getDataAndTime().equals(event.getDataAndTime())) {
+                if (0 == existingEvent.getDataAndTime().compareTo(event.getDataAndTime()))
                     return true;
-                }
             }
+            else 
             current = current.getNext();
         }
         return false;
     }
+    
+    
 
     public void Remove(String phone_number) {// start remove
         if (head == null) {
@@ -232,8 +236,6 @@ public class LinkedList<T> { // start LinkedList
                     current = current.next;
                 } // end while
                 break;
-            default:
-                System.out.println("Wrong number, please do it again");
         } // end switch
         System.out.println("Contact not found!");
         return null;
@@ -266,5 +268,22 @@ public class LinkedList<T> { // start LinkedList
         if (current == null)
         return;
         System.out.println("Event title:" + ((Event)current.data).getEventTitle());
+        System.out.println("Contact name:" + ((Event)current.data).getContactName());
+        System.out.println("Event date and time (MM/DD/YYYY HH:MM):" + ((Event)current.data).getDataAndTime());
+         System.out.println("Event Location:" + ((Event)current.data).getLocation());
     } // end PrintEvent
+    public void PrintAllEvent() {
+        if (head == null)
+        return;
+        current = head;
+        while (current != null){
+        if (current.data instanceof Event){
+        System.out.println("Event title:" + ((Event)current.data).getEventTitle());
+        System.out.println("Contact name:" + ((Event)current.data).getContactName());
+        System.out.println("Event date and time (MM/DD/YYYY HH:MM):" + ((Event)current.data).getDataAndTime());
+        System.out.println("Event Location:" + ((Event)current.data).getLocation());
+        }
+        current =current.next;
+        }
+    }
 } // end LinkedList

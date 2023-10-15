@@ -1,9 +1,15 @@
 import java.util.Scanner;
+import java.util.Date;
 
 public class Phonebook {
-    LinkedList<Contact> contact = new LinkedList<>();;
-    LinkedList<Event> event = new LinkedList<>();;
+    LinkedList<Contact> contact;
+    LinkedList<Event> event;
     public Scanner input = new Scanner(System.in);
+
+    public Phonebook(){
+        contact = new LinkedList<>();;
+        event = new LinkedList<>();;
+    }
 
     public void display() {
         System.out.println("Welcome to the Linked Tree Phonebook!\n" +
@@ -85,7 +91,7 @@ public class Phonebook {
                 String contactName = input.nextLine();
 
                 System.out.print("Enter event date and time (MM/DD/YYYY HH:MM): ");
-                String dateTime = input.nextLine();
+                Date dateTime = new Date(input.nextLine());
 
                 System.out.print("Enter event location: ");
                 String location = input.nextLine();
@@ -94,14 +100,30 @@ public class Phonebook {
                 event.add(event1);
                 break;
             case 5:
-
+                    System.out.println("Enter search criteria:\r\n" + //
+                    "1. contact name\r\n" + //
+                    "2. Event tittle");
+                    choice2 = input.nextInt();
+                    switch (choice2) {
+                        case 1:
+                        System.out.println("Enter the Contact Name:");
+                        contactName = input.nextLine();
+                        event.PrintEvent(event.getHead(), contactName, choice2);
+                        break;
+                        case 2:
+                        System.out.println("Enter the event title:");
+                        eventTitle = input.nextLine();
+                        event.PrintEvent(event.getHead(), eventTitle, choice2);
+                        break;
+                        default:
+                        System.out.println("Wrong number, please do it again");
+                    }
                 break;
 
             case 6:
 
                 break;
-            case 7:
-
+            case 7: event.PrintAllEvent();
                 break;
 
         }//end big switch
