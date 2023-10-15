@@ -1,8 +1,10 @@
+import java.util.Date;
 public class Event {
-	private String EventTitle, DataAndTime, Location;
+	private String EventTitle, Location;
+	private Date DataAndTime;
 	private String ContactName;
 
-	public Event(String eventTitle, String dateAndTime, String location, String contactName) {
+	public Event(String eventTitle, Date dateAndTime, String location, String contactName) {
 		this.EventTitle = eventTitle;
 		this.DataAndTime = dateAndTime;
 		this.Location = location;
@@ -17,11 +19,11 @@ public class Event {
 		EventTitle = eventTitle;
 	}
 
-	public String getDataAndTime() {
+	public Date getDataAndTime() {
 		return DataAndTime;
 	}
 
-	public void setDataAndTime(String dataAndTime) {
+	public void setDataAndTime(Date dataAndTime) {
 		DataAndTime = dataAndTime;
 	}
 
