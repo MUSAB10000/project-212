@@ -7,7 +7,7 @@ public class LinkedList<T> { // start LinkedList
         return head;
     }
 
-    public void add(T val) {
+ public void add(T val) {
         if (val instanceof Contact) {
             System.out.println(addContact((Contact) val));
             return;
@@ -25,7 +25,7 @@ public class LinkedList<T> { // start LinkedList
             return "Contact added successfully!";
         }
 
-        boolean contactExists = existForNumAndName(head, c.getContactName(), c.getPhoneNumber());
+        boolean contactExists = existForNumAndName(head,c.getContactName(),c.getPhoneNumber());
         if (contactExists)
             return "The contact already exists.";
 
@@ -63,24 +63,24 @@ public class LinkedList<T> { // start LinkedList
         }
 
         Contact eventContact = e.getContact_inv();
-        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
-                eventContact.getPhoneNumber());
-        if (!eventContactExists)
+        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),eventContact.getPhoneNumber());
+        if (eventContactExists)
             return "The contact for the event does not exist.";
-
-        boolean eventExists = eventExists(head, e);
-        if (eventExists)
-            return "The event already exists.";
 
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict)
             return "There is a date and time conflict with an existing event.";
 
+        if (head.getData() instanceof Event && e.compareTo(((Event) head.getData())) > 0) {
+            Node<T> temp = head;
+            head = new Node<T>((T) e);
+            head.setNext(temp);
+            return "Event added successfully!";
+        }
         current = head;
         Node<T> prev = null;
         while (current != null) {
-            if (current.getData() instanceof Event
-                    && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
+            if (current.getData() instanceof Event &&e.compareTo((Event) current.getData()) > 0) {
                     Node<T> temp = new Node<T>((T) e);
                     temp.setNext(current);
                     prev.setNext(temp) ;
@@ -97,33 +97,12 @@ public class LinkedList<T> { // start LinkedList
     }
 
     private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
-        Node<T> current = head;
-        while (current != null) {
-            if (current.getData() instanceof Contact) {
-                Contact contact = (Contact) current.getData();
-                if (contact.getContactName().equalsIgnoreCase(contactName)
-                        && contact.getPhoneNumber().equals(phoneNumber)) {
-                    return true;
-                }
-            }
-            current = current.getNext();
-        }
+        if(SearchContact(head, contactName,1)==null||SearchContact(head, phoneNumber,2)==null)
         return false;
+        else
+        return true;
     }
 
-    private boolean eventExists(Node<T> head, Event event) {
-        Node<T> current = head;
-        while (current != null) {
-            if (current.getData() instanceof Event) {
-                Event existingEvent = (Event) current.getData();
-                if (existingEvent.getEventTitle().equalsIgnoreCase(event.getEventTitle())) {
-                    return true;
-                }
-            }
-            current = current.getNext();
-        }
-        return false;
-    }
 
     private boolean dateTimeConflict(Node<T> head, Event event) {
         Node<T> current = head;
