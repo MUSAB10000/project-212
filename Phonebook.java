@@ -3,15 +3,13 @@ import java.util.Date;
 
 public class Phonebook {
 
-    LinkedList<Contact> contact;
-    LinkedList<Event> event;
+    LinkedList<Contact> contacts;
+    LinkedList<Event> events;
     public Scanner input = new Scanner(System.in);
 
     public Phonebook() {
-        contact = new LinkedList<>();
-        ;
-        event = new LinkedList<>();
-        ;
+        contacts = new LinkedList<>();
+        events = new LinkedList<>();
     }
 
     public void display() {
@@ -50,7 +48,7 @@ public class Phonebook {
                     System.out.print("Enter any notes for the contact: ");
                     String notes = input.next();
                     Contact x = new Contact(name, phoneNumber, email, address, birthday, notes);
-                    contact.add(x);
+                    contacts.add(x);
                     break;
                 case 2:
                     System.out.print("Enter search criteria:\n" +
@@ -65,27 +63,27 @@ public class Phonebook {
                         case 1:
                             System.out.println("Enter the contact's name:");
                             name = input.next();
-                            contact.SearchContact(contact.getHead(), name, choice2);
+                            contacts.SearchContact(contacts.getHead(), name, choice2);
                             break;
                         case 2:
                             System.out.println("Enter the contact's phone number:");
                             phoneNumber = input.next();
-                            contact.SearchContact(contact.getHead(), phoneNumber, choice2);
+                            contacts.SearchContact(contacts.getHead(), phoneNumber, choice2);
                             break;
                         case 3:
                             System.out.println("Enter the contact's email address:");
                             email = input.next();
-                            contact.SearchContact(contact.getHead(), email, choice2);
+                            contacts.SearchContact(contacts.getHead(), email, choice2);
                             break;
                         case 4:
                             System.out.println("Enter the contact's address: ");
                             address = input.next();
-                            contact.SearchContact(contact.getHead(), address, choice2);
+                            contacts.SearchContact(contacts.getHead(), address, choice2);
                             break;
                         case 5:
                             System.out.println("Enter the contact's birthday: ");
                             birthday = input.next();
-                            contact.SearchContact(contact.getHead(), birthday, choice2);
+                            contacts.SearchContact(contacts.getHead(), birthday, choice2);
                             break;
                         default:
                             System.out.println("Wrong number, please do it again");
@@ -94,7 +92,7 @@ public class Phonebook {
                 case 3:
                     System.out.println("Enter phone number to delete a contact");
                     String phone = input.next();
-                    contact.Remove(phone);
+                    contacts.Remove(phone);
                     break;
                 case 4:
                     System.out.print("Enter event title: ");
@@ -108,9 +106,11 @@ public class Phonebook {
 
                     System.out.print("Enter event location: ");
                     String location = input.next();
-                    Contact contact = new Contact(contactName);
+                    if(contacts.SearchContact(contacts.getHead(), contactName, 1)==null)
+                       break;
+                    Contact contact = contacts.SearchContact(contacts.getHead(), contactName, 1);
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
-                    event.add(event1);
+                    events.add(event1);
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //
@@ -121,12 +121,12 @@ public class Phonebook {
                         case 1:
                             System.out.println("Enter the Contact Name:");
                             contactName = input.next();
-                            event.PrintEvent(event.getHead(), contactName, choice2);
+                            events.PrintEvent(events.getHead(), contactName, choice2);
                             break;
                         case 2:
                             System.out.println("Enter the event title:");
                             eventTitle = input.next();
-                            event.PrintEvent(event.getHead(), eventTitle, choice2);
+                            events.PrintEvent(events.getHead(), eventTitle, choice2);
                             break;
                         default:
                             System.out.println("Wrong number, please do it again");
@@ -137,7 +137,7 @@ public class Phonebook {
 
                     break;
                 case 7:
-                    event.PrintAllEvent();
+                    events.PrintAllEvent();
                     break;
 
             }
