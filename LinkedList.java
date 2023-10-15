@@ -76,8 +76,7 @@ public class LinkedList<T> { // start LinkedList
         if (dateTimeConflict)
             return "There is a date and time conflict with an existing event.";
 
-        Node<T> prev=null;
-        current = head;
+        Node<T> current = head;
         while (current != null) {
             if (current.getData() instanceof Event
                     && e.getEventTitle().compareTo(((Event) (current.getData())).getEventTitle()) > 0) {
