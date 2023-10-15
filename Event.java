@@ -1,7 +1,6 @@
 public class Event {
 	private String EventTitle, DataAndTime, Location;
 	private String ContactName;
-	1 // fix it later
 
 	public Event(String eventTitle, String dateAndTime, String location, String contactName) {
 		this.EventTitle = eventTitle;

@@ -164,14 +164,13 @@ public class LinkedList<T> { // start LinkedList
             return;
         }
         if (eventNode.data instanceof Event) {// check for first one
-            if (((Event) eventNode.data).getContact_inv().getContactName().equalsIgnoreCase(ContactEvent)) {
+            if (((Event) eventNode.data).getContactName().equalsIgnoreCase(ContactEvent)) {
                 eventNode = eventNode.next;
             }
         }
         while (eventNode.next != null) {
             if (eventNode.next.data instanceof Event) {
-                if (((Event) eventNode.next.data).getContact_inv().getContactName()
-                        .equalsIgnoreCase(ContactEvent)) {
+                if (((Event) eventNode.next.data).getContactName().equalsIgnoreCase(ContactEvent)) {
                     eventNode.next = eventNode.next.next;
                 }
             }

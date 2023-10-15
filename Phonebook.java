@@ -17,7 +17,7 @@ public class Phonebook {
                 "7. Print all events alphabetically\n" +
                 "8. Exit");
         int choice = input.nextInt();
-        switch (choice) {
+        switch (choice) {//start big switch
             case 1:
                 System.out.print("Enter the contact's name: ");
                 String name = input.nextLine();
@@ -48,9 +48,30 @@ public class Phonebook {
                         "5. Birthday\n" +
                         "Enter your choice: ");
                 int choice2 = input.nextInt();
-                contact.Search(contact.getHead(), choice2);
+                switch(choice2) {//start small switch
+                    case 1:System.out.println("Enter the contact's name:");
+                           name = input.next();
+                           contact.SearchContact(contact.getHead(),name, choice2);
+                           break;
+                    case 2:System.out.println("Enter the contact's name:");
+                           phoneNumber = input.next();
+                           contact.SearchContact(contact.getHead(),phoneNumber, choice2);
+                           break;
+                    case 3:System.out.println("Enter the contact's name:");
+                           email = input.next();
+                           contact.SearchContact(contact.getHead(),email, choice2);
+                           break;
+                    case 4:System.out.println("Enter the contact's name:");
+                           address = input.next();
+                           contact.SearchContact(contact.getHead(),address, choice2);
+                           break;
+                    case 5:System.out.println("Enter the contact's name:");
+                           birthday = input.next();
+                           contact.SearchContact(contact.getHead(),birthday, choice2);
+                           break;
+                    default: System.out.println("Wrong number, please do it again");
+                }//end small switch
                 break;
-                1 // معتمد احطها خطأ
             case 3:
                 System.out.println("Enter phone number to delete a contact");
                 String phone = input.nextLine();
@@ -83,6 +104,6 @@ public class Phonebook {
 
                 break;
 
-        }
+        }//end big switch
     }
 }
