@@ -112,7 +112,6 @@ public class Phonebook {
                     String location = input.next();
                     Contact contact = new Contact(contactName);
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
-                    event.add(event1);
                     events.add(event1);
                     break;
                 case 5:
