@@ -61,10 +61,11 @@ public class LinkedList<T> { // start LinkedList
         if(current==null){
         prev.setNext(newNode);
         current=head;
+        return "Contact added successfully!";
         }
 
 
-        return "Contact added successfully!";
+        return "Contact Not added successfully!";
     }
 
     private String addEvent(Event e) {
