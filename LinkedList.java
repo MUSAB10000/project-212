@@ -9,7 +9,7 @@ public class LinkedList<T> { // start LinkedList
         return head;
     }
 
-   public void add(T val) {
+    public void add(T val) {
         if (val instanceof Contact) {
             System.out.println(addContact((Contact) val));
             return;
@@ -88,9 +88,10 @@ public class LinkedList<T> { // start LinkedList
                 current = newNode;
                 return "Event added successfully!";
             }
-           }
             prev = current;
             current = current.getNext();
+           }
+          
              
         
         if(current==null){
