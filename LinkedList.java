@@ -5,6 +5,11 @@ public class LinkedList<T> { // start LinkedList
     private Node<T> head;
     private Node<T> current;
 
+    public LinkedList(){
+        head=null;
+        current=null;
+    }
+
     public Node<T> getHead() {
         return head;
     }
@@ -27,7 +32,7 @@ public class LinkedList<T> { // start LinkedList
             return "Contact added successfully!";
         }
 
-        boolean contactExists = existForNumAndName(head, c.getContactName(), c.getPhoneNumber());
+        boolean contactExists = existForNumAndName(c.getContactName(), c.getPhoneNumber());
         if (contactExists)
             return "The contact already exists.";
 
@@ -37,23 +42,27 @@ public class LinkedList<T> { // start LinkedList
             head.setNext(temp);
             return "Contact added successfully!";
         }
-
+        
+        Node<T> newNode = new Node<T>((T) c);
         current = head;
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
-                    Node<T> temp = new Node<T>((T) c);
-                    temp.setNext(current);
-                    prev.setNext(temp);
-                    current = temp;
+                    newNode.setNext(current);
+                    prev.setNext(newNode);
+                    current = newNode;
                     return "Contact added successfully!";
                 }
             }
             prev = current;
             current = current.getNext();
         }
-        current.setNext(new Node<T>((T) c));
+        if(current==null){
+        prev.setNext(newNode);
+        current=head;
+        }
+
 
         return "Contact added successfully!";
     }
@@ -64,11 +73,6 @@ public class LinkedList<T> { // start LinkedList
             return "Event added successfully!";
         }
 
-        Contact eventContact = e.getContact_inv();
-        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
-                eventContact.getPhoneNumber());
-        if (eventContactExists)
-            return "The contact for the event does not exist.";
 
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict)
@@ -80,27 +84,32 @@ public class LinkedList<T> { // start LinkedList
             head.setNext(temp);
             return "Event added successfully!";
         }
+         
+
         current = head;
+        Node<T> newNode = new Node<T>((T) e);
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
-                Node<T> temp = new Node<T>((T) e);
-                temp.setNext(current);
-                prev.setNext(temp);
-                current = temp;
+                newNode.setNext(current);
+                prev.setNext(newNode);
+                current = newNode;
                 return "Event added successfully!";
             }
             prev = current;
             current = current.getNext();
         }
-        current.setNext(new Node<T>((T) e));
+         if(current==null){
+        prev.setNext(newNode);
+        current=head;
+        }
 
         return "Event added successfully!";
 
     }
 
-    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
-        if (SearchContact(head, contactName, 1) == null || SearchContact(head, phoneNumber, 2) == null)
+    private boolean existForNumAndName(String contactName, String phoneNumber) {
+        if (SearchContact(this.head,contactName, 1) == null && SearchContact(this.head,phoneNumber, 2) == null)
             return false;
         else
             return true;
