@@ -113,6 +113,7 @@ public class Phonebook {
                     Contact contact = new Contact(contactName);
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
                     event.add(event1);
+                    events.add(event1);
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //
