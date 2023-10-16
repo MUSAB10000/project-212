@@ -26,7 +26,11 @@ public class Phonebook {
                             "6. Print contacts by first name\n" +
                             "7. Print all events alphabetically\n" +
                             "8. Exit");
-            choice = input.nextInt();
+             try{               
+             choice = input.nextInt();
+             }catch(Exception e){
+                   e.getMessage();
+             }
 
             switch (choice) {// start big switch
                 case 1:
@@ -106,11 +110,16 @@ public class Phonebook {
 
                     System.out.print("Enter event location: ");
                     String location = input.next();
-                    if(contacts.SearchContact(contacts.getHead(), contactName, 1)==null)
-                       break;
                     Contact contact = contacts.SearchContact(contacts.getHead(), contactName, 1);
+                    if(contact==null){
+                       System.out.println("Contant Not Exist");
+                       break;
+                    }
+                   
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
+                      System.out.println("1NewEVENT  ;;");
                     events.add(event1);
+                    System.out.println("2NewEVENT  ;;");
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //
@@ -134,6 +143,8 @@ public class Phonebook {
                     break;
 
                 case 6:
+                 
+                 
 
                     break;
                 case 7:
@@ -144,4 +155,6 @@ public class Phonebook {
         } while (choice != 8);
         // end big switch
     }
+    
+    
 }

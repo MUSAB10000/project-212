@@ -31,7 +31,7 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) c);
             return "Contact added successfully!";
         }
-
+     
         boolean contactExists = existForNumAndName(c.getContactName(), c.getPhoneNumber());
         if (contactExists)
             return "The contact already exists.";
@@ -73,11 +73,11 @@ public class LinkedList<T> { // start LinkedList
             return "Event added successfully!";
         }
 
-
+ 
         boolean dateTimeConflict = dateTimeConflict(head, e);
-        if (dateTimeConflict)
+        if (dateTimeConflict){
             return "There is a date and time conflict with an existing event.";
-
+        }
         if (head.getData() instanceof Event && e.compareTo(((Event) head.getData())) > 0) {
             Node<T> temp = head;
             head = new Node<T>((T) e);
@@ -90,21 +90,25 @@ public class LinkedList<T> { // start LinkedList
         Node<T> newNode = new Node<T>((T) e);
         Node<T> prev = null;
         while (current != null) {
-            if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
+            if (current.getData() instanceof Event){
+             if(e.compareTo((Event) current.getData()) > 0) {
                 newNode.setNext(current);
                 prev.setNext(newNode);
                 current = newNode;
                 return "Event added successfully!";
             }
+           }
             prev = current;
             current = current.getNext();
+             
         }
-         if(current==null){
+        if(current==null){
         prev.setNext(newNode);
         current=head;
+        return "Event added successfully!";
         }
 
-        return "Event added successfully!";
+        return "Event Not Adeed!";
 
     }
 
@@ -277,6 +281,7 @@ public class LinkedList<T> { // start LinkedList
         System.out.println("Event Location:" + ((Event) current.data).getLocation());
     } // end PrintEvent
 
+
     public void PrintAllEvent() {
         if (head == null)
             return;
@@ -301,4 +306,31 @@ public class LinkedList<T> { // start LinkedList
         System.out.println("Notes:" + ((Contact) temp.data).getNotes());
 
     }
+
+
+    private String Firstname(String name){
+        String Firstname = "";
+        for(int i = 0; i < name.length(); i++){
+            if(name.substring(i,i) != " ")
+            Firstname += name.substring(i,i);
+            else
+            break;
+        }
+        System.out.println(Firstname);
+        return Firstname;
+     }
+   public void PrintByFirstName(String Name){
+    if (head==null)
+        System.out.println("No Contacts found!");
+
+    current=head;
+    while(current!=null){
+        if(current.getData() instanceof Contact)
+        if ((Firstname(Name).compareToIgnoreCase(Firstname(((Contact)current.data).getContactName()))) == 0)
+            System.out.println(current.getData().toString() + "\n");
+        current=current.getNext();
+    }
+
+    }
+
 } // end LinkedList
