@@ -5,11 +5,6 @@ public class LinkedList<T> { // start LinkedList
     private Node<T> head;
     private Node<T> current;
 
-    public LinkedList(){
-        head=null;
-        current=null;
-    }
-
     public Node<T> getHead() {
         return head;
     }
@@ -42,16 +37,16 @@ public class LinkedList<T> { // start LinkedList
             head.setNext(temp);
             return "Contact added successfully!";
         }
-        
-        Node<T> newNode = new Node<T>((T) c);
+
         current = head;
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
-                    newNode.setNext(current);
-                    prev.setNext(newNode);
-                    current = newNode;
+                    Node<T> temp = new Node<T>((T) c);
+                    temp.setNext(current);
+                    prev.setNext(temp);
+                    current = temp;
                     return "Contact added successfully!";
                 }
             }
@@ -85,7 +80,6 @@ public class LinkedList<T> { // start LinkedList
         }
          
         current = head;
-        Node<T> newNode = new Node<T>((T) e);
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
@@ -99,7 +93,7 @@ public class LinkedList<T> { // start LinkedList
             prev = current;
             current = current.getNext();
              
-        }
+        
         if(current==null){
         prev.setNext(new Node<T>((T) e));
         current=head;
@@ -110,8 +104,8 @@ public class LinkedList<T> { // start LinkedList
 
     }
 
-    private boolean existForNumAndName(String contactName, String phoneNumber) {
-        if (SearchContact(this.head,contactName, 1) == null && SearchContact(this.head,phoneNumber, 2) == null)
+    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
+        if (SearchContact(head, contactName, 1) == null || SearchContact(head, phoneNumber, 2) == null)
             return false;
         else
             return true;
