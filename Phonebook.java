@@ -1,6 +1,6 @@
+
 import java.util.Scanner;
 import java.util.Date;
-
 public class Phonebook {
 
     LinkedList<Contact> contacts;
@@ -26,11 +26,8 @@ public class Phonebook {
                             "6. Print contacts by first name\n" +
                             "7. Print all events alphabetically\n" +
                             "8. Exit");
-             try{               
+                            
              choice = input.nextInt();
-             }catch(Exception e){
-                   e.getMessage();
-             }
 
             switch (choice) {// start big switch
                 case 1:
@@ -67,27 +64,31 @@ public class Phonebook {
                         case 1:
                             System.out.println("Enter the contact's name:");
                             name = input.next();
-                            contacts.SearchContact(contacts.getHead(), name, choice2);
+                            Contact c=contacts.SearchContact(contacts.getHead(), name, choice2);
+                            if(c!=null)
+                            System.out.println(c.toString());
                             break;
                         case 2:
                             System.out.println("Enter the contact's phone number:");
                             phoneNumber = input.next();
-                            contacts.SearchContact(contacts.getHead(), phoneNumber, choice2);
+                            c=contacts.SearchContact(contacts.getHead(), phoneNumber, choice2);
+                            if(c!=null)
+                            System.out.println(c.toString());
                             break;
                         case 3:
                             System.out.println("Enter the contact's email address:");
                             email = input.next();
-                            contacts.SearchContact(contacts.getHead(), email, choice2);
+                            contacts.SearchAll(email);
                             break;
                         case 4:
                             System.out.println("Enter the contact's address: ");
                             address = input.next();
-                            contacts.SearchContact(contacts.getHead(), address, choice2);
+                            contacts.SearchAll(address);
                             break;
                         case 5:
                             System.out.println("Enter the contact's birthday: ");
                             birthday = input.next();
-                            contacts.SearchContact(contacts.getHead(), birthday, choice2);
+                            contacts.SearchAll(birthday);
                             break;
                         default:
                             System.out.println("Wrong number, please do it again");
@@ -96,7 +97,13 @@ public class Phonebook {
                 case 3:
                     System.out.println("Enter phone number to delete a contact");
                     String phone = input.next();
+                    String namecontact= (contacts.SearchContact(contacts.getHead(), phone, 2)).getContactName();
+                    if(namecontact==null){
+                    System.out.println("Contact Number Not Found!");    
+                    break;
+                    }
                     contacts.Remove(phone);
+                    events.removeEvent(namecontact);
                     break;
                 case 4:
                     System.out.print("Enter event title: ");
@@ -106,11 +113,15 @@ public class Phonebook {
                     String contactName = input.next();
 
                     System.out.print("Enter event date and time (MM/DD/YYYY HH:MM): ");
-                    Date dateTime = new Date(input.next());
+                    String dateTime = input.next();
 
                     System.out.print("Enter event location: ");
                     String location = input.next();
-                    Contact contact = new Contact(contactName);
+
+                    Contact contact =contacts.SearchContact(contacts.getHead(), contactName, 1);
+                    if(contact==null)
+                    	break;
+
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
                     events.add(event1);
                     break;
@@ -135,19 +146,22 @@ public class Phonebook {
                     }
                     break;
 
-                case 6:
-                 
-                 
+                case 6: 
+                System.out.println("Enter the First Name you want to search for:");
 
+                String FName = input.next();
+
+                contacts.PrintByFirstName(FName);
                     break;
                 case 7:
                     events.PrintAllEvent();
                     break;
 
-            }
+            } // end big switch
         } while (choice != 8);
-        // end big switch
+       
     }
+   
     
     
 }
