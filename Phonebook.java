@@ -110,16 +110,9 @@ public class Phonebook {
 
                     System.out.print("Enter event location: ");
                     String location = input.next();
-                    Contact contact = contacts.SearchContact(contacts.getHead(), contactName, 1);
-                    if(contact==null){
-                       System.out.println("Contant Not Exist");
-                       break;
-                    }
-                   
+                    Contact contact = new Contact(contactName);
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
-                      System.out.println("1NewEVENT  ;;");
-                    events.add(event1);
-                    System.out.println("2NewEVENT  ;;");
+                    event.add(event1);
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //

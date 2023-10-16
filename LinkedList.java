@@ -31,8 +31,8 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) c);
             return "Contact added successfully!";
         }
-     
-        boolean contactExists = existForNumAndName(c.getContactName(), c.getPhoneNumber());
+
+        boolean contactExists = existForNumAndName(head, c.getContactName(), c.getPhoneNumber());
         if (contactExists)
             return "The contact already exists.";
 
@@ -73,7 +73,12 @@ public class LinkedList<T> { // start LinkedList
             return "Event added successfully!";
         }
 
- 
+        Contact eventContact = e.getContact_inv();
+        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
+                eventContact.getPhoneNumber());
+        if (eventContactExists)
+            return "The contact for the event does not exist.";
+
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict){
             return "There is a date and time conflict with an existing event.";
@@ -90,11 +95,11 @@ public class LinkedList<T> { // start LinkedList
         Node<T> newNode = new Node<T>((T) e);
         Node<T> prev = null;
         while (current != null) {
-            if (current.getData() instanceof Event){
-             if(e.compareTo((Event) current.getData()) > 0) {
-                newNode.setNext(current);
-                prev.setNext(newNode);
-                current = newNode;
+            if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
+                Node<T> temp = new Node<T>((T) e);
+                temp.setNext(current);
+                prev.setNext(temp);
+                current = temp;
                 return "Event added successfully!";
             }
            }
@@ -102,9 +107,8 @@ public class LinkedList<T> { // start LinkedList
             current = current.getNext();
              
         }
-        if(current==null){
-        prev.setNext(newNode);
-        current=head;
+        current.setNext(new Node<T>((T) e));
+
         return "Event added successfully!";
         }
 
