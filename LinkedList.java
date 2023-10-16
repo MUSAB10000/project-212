@@ -72,13 +72,6 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) e);
             return "Event added successfully!";
         }
-
-        Contact eventContact = e.getContact_inv();
-        boolean eventContactExists = existForNumAndName(head, eventContact.getContactName(),
-                eventContact.getPhoneNumber());
-        if (eventContactExists)
-            return "The contact for the event does not exist.";
-
         boolean dateTimeConflict = dateTimeConflict(head, e);
         if (dateTimeConflict){
             return "There is a date and time conflict with an existing event.";
@@ -90,16 +83,15 @@ public class LinkedList<T> { // start LinkedList
             return "Event added successfully!";
         }
          
-
         current = head;
         Node<T> newNode = new Node<T>((T) e);
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
                 Node<T> temp = new Node<T>((T) e);
-                temp.setNext(current);
+                newNode.setNext(current);
                 prev.setNext(temp);
-                current = temp;
+                current = newNode;
                 return "Event added successfully!";
             }
            }
@@ -107,8 +99,9 @@ public class LinkedList<T> { // start LinkedList
             current = current.getNext();
              
         }
-        current.setNext(new Node<T>((T) e));
-
+        if(current==null){
+        prev.setNext(new Node<T>((T) e));
+        current=head;
         return "Event added successfully!";
         }
 
