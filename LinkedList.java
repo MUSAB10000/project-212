@@ -9,7 +9,7 @@ public class LinkedList<T> { // start LinkedList
         return head;
     }
 
-    public void add(T val) {
+   public void add(T val) {
         if (val instanceof Contact) {
             System.out.println(addContact((Contact) val));
             return;
@@ -37,16 +37,16 @@ public class LinkedList<T> { // start LinkedList
             head.setNext(temp);
             return "Contact added successfully!";
         }
-
+        Node<T> newNode= new Node<T>((T) c);
         current = head;
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Contact) {
                 if (c.compareTo(((Contact) current.getData())) > 0) {
-                    Node<T> temp = new Node<T>((T) c);
-                    temp.setNext(current);
-                    prev.setNext(temp);
-                    current = temp;
+                    
+                    newNode.setNext(current);
+                    prev.setNext(newNode);
+                    current = newNode;
                     return "Contact added successfully!";
                 }
             }
@@ -78,14 +78,13 @@ public class LinkedList<T> { // start LinkedList
             head.setNext(temp);
             return "Event added successfully!";
         }
-         
+        Node<T> newNode= new Node<T>((T) e);
         current = head;
         Node<T> prev = null;
         while (current != null) {
             if (current.getData() instanceof Event && e.compareTo((Event) current.getData()) > 0) {
-                Node<T> temp = new Node<T>((T) e);
                 newNode.setNext(current);
-                prev.setNext(temp);
+                prev.setNext(newNode);
                 current = newNode;
                 return "Event added successfully!";
             }
@@ -95,7 +94,7 @@ public class LinkedList<T> { // start LinkedList
              
         
         if(current==null){
-        prev.setNext(new Node<T>((T) e));
+        prev.setNext(newNode);
         current=head;
         return "Event added successfully!";
         }
