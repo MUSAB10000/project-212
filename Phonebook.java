@@ -110,9 +110,13 @@ public class Phonebook {
 
                     System.out.print("Enter event location: ");
                     String location = input.next();
-                    Contact contact = new Contact(contactName);
+                    Contact contact =contacts.SearchContact(contacts.getHead(), contactName, 1) ;
+                    if(contact==null)
+                    break;
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
+                    System.out.print("before adding event");
                     events.add(event1);
+                    System.out.print("after adding event");
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //
