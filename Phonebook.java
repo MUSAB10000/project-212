@@ -123,7 +123,9 @@ public class Phonebook {
                     	break;
 
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
+                    System.out.print("before adding event");
                     events.add(event1);
+                    System.out.print("after adding event");
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //
