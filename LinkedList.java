@@ -116,14 +116,14 @@ public class LinkedList<T> { // start LinkedList
 
     }
 
-    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {
+    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {//check if number or name have been used before in contact.
         if (SearchContact(head, contactName, 1) == null && SearchContact(head, phoneNumber, 2) == null)
             return false;
         else
             return true;
     }
 
-    private boolean dateTimeConflict(Node<T> head, Event event) {
+    private boolean dateTimeConflict(Node<T> head, Event event) {//cheack if there is an event that has the same DateAndTime and the same name, Assuming the name of contact is unique.
         current = head;
         while (current != null) {
             if (current.getData() instanceof Event) {
@@ -137,51 +137,62 @@ public class LinkedList<T> { // start LinkedList
         return false;
     }
 
-    public void RemoveContact(String phone_number) {// start remove
+    public void RemoveContact(String phone_number) {
         if (head == null) {
             System.out.println("Contact not found");
             return;
-        } else if (head.data instanceof Contact) {
-            if (((Contact) head.data).getPhoneNumber().equalsIgnoreCase(phone_number)) {
-                head = head.getNext();
-                System.out.println("delete contact ");
-                return;
-            }
         }
-     
+
+        if (head.data instanceof Contact && ((Contact) head.data).getPhoneNumber().equalsIgnoreCase(phone_number)) {
+            head = head.getNext();
+            System.out.println("Contact deleted");
+            return;
+        }
+
         current = head;
         while (current.getNext() != null) {
             if (current.getNext().data instanceof Contact) {
                 if (((Contact) current.getNext().data).getPhoneNumber().equalsIgnoreCase(phone_number)) {
-                    current.setNext(current.getNext().getNext());
-                    System.out.println("delete contact ");
-                    return;// delete contact
+                    if (current.getNext().getNext() != null) {
+                        current.setNext(current.getNext().getNext());
+                    } else {
+                        current.setNext(null);
+                    }
+                    System.out.println("Contact deleted");
+                    return;
                 }
             }
-            
             current = current.getNext();
         }
+
+        System.out.println("Contact not found");
     }// end remove
 
-    public void RemoveEvent(String ContactEvent) { // start remove event from contact
-        current = head;
+    public void RemoveEvent(String ContactEvent) {
         if (head == null) {
             return;
         }
-        if (head.data instanceof Event) {// check for first one
-            if (((Event) head.data).getContactName().equalsIgnoreCase(ContactEvent)) {
-                head = head.getNext();
-            }
+
+        if (head.data instanceof Event && ((Event) head.data).getContactName().equalsIgnoreCase(ContactEvent)) {
+            head = head.getNext();
+            return;
         }
-        while (current.getNext() != null) {
+
+        current = head;
+        while (current != null && current.getNext() != null) {
             if (current.getNext().data instanceof Event) {
                 if (((Event) current.getNext().data).getContactName().equalsIgnoreCase(ContactEvent)) {
-                    current.setNext(current.getNext().getNext());
+                    if (current.getNext().getNext() != null) {
+                        current.setNext(current.getNext().getNext());
+                    } else {
+                        current.setNext(null);
+                    }
+                    return;
                 }
             }
             current = current.getNext();
         }
-    }// end remove event from contact
+    }
 
     public T SearchContact(Node<T> head, String name, int num) { // start SearchContact
         if (head == null) {
@@ -243,7 +254,7 @@ public class LinkedList<T> { // start LinkedList
     }// end Search
 
     public T SearchEvent(Node<T> head, String name, int num) { // start PrintEvent
-       
+
         if (head == null) { // start if
             System.out.println("Event not found!");
             return null;
@@ -255,9 +266,9 @@ public class LinkedList<T> { // start LinkedList
                     if (current.data instanceof Event && ((Event) current.data).getContactName().equals(name)) {// start
                                                                                                                 // if
                         System.out.println("Event found!");
-                        return  current.data;
+                        return current.data;
                     } // end if
-                    current=current.getNext();
+                    current = current.getNext();
                 } // end while
                 break;
             case 2:
@@ -266,17 +277,15 @@ public class LinkedList<T> { // start LinkedList
                                                                                                                // if
 
                         System.out.println("Event found!");
-                         return  current.data;
+                        return current.data;
                     } // end if
-                     current=current.getNext();
+                    current = current.getNext();
                 } // end while
                 break;
         } // end switch
-        
-             return null;
-       
-    } // end PrintEvent
 
-    
+        return null;
+
+    } 
 
 } // end LinkedList
