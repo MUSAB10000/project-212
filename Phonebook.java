@@ -144,7 +144,7 @@ public class Phonebook {
 
                     Contact contact = contacts.SearchContact(contacts.getHead(), contactName, 1);
                     if (contact == null){
-                    System.out.println("the contact name not found in event");
+                    System.out.println("The contact does not exist!");
                         break;}
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
                     events.add(event1);
