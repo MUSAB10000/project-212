@@ -1,6 +1,5 @@
-
 import java.util.Scanner;
-import java.util.Date;
+
 
 public class Phonebook {
 
@@ -120,13 +119,14 @@ public class Phonebook {
                 case 3:
                     System.out.println("Enter phone number to delete a contact");
                     String phone = input.next();
-                    String namecontact = (contacts.SearchContact(contacts.getHead(), phone, 2)).getContactName();
-                    if (namecontact == null) {
+                    
+                    Contact numberPhon = contacts.SearchContact(contacts.getHead(), phone, 2);
+                    if (numberPhon == null) {
                         System.out.println("Contact Number Not Found!");
                         break;
                     }
-                    contacts.Remove(phone);
-                    events.removeEvent(namecontact);
+                    contacts.RemoveContact(phone);
+                    events.RemoveEvent(numberPhon.getContactName());
                     break;
                 case 4:
                     System.out.print("Enter event title: ");
@@ -145,11 +145,8 @@ public class Phonebook {
                     Contact contact = contacts.SearchContact(contacts.getHead(), contactName, 1);
                     if (contact == null)
                         break;
-
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
-                    System.out.print("before adding event");
                     events.add(event1);
-                    System.out.print("after adding event");
                     break;
                 case 5:
                     System.out.println("Enter search criteria:\r\n" + //
@@ -161,13 +158,15 @@ public class Phonebook {
                             System.out.println("Enter the Contact Name:");
                             contactName = input.next();
                             contactName += input.nextLine();
-                            events.PrintEvent(events.getHead(), contactName, choice2);
+                            Event E=(Event)events.SearchEvent(events.getHead(), contactName, choice2);
+                            System.out.println(E.toString());
                             break;
                         case 2:
                             System.out.println("Enter the event title:");
                             eventTitle = input.next();
                             eventTitle += input.nextLine();
-                            events.PrintEvent(events.getHead(), eventTitle, choice2);
+                            if(events.SearchEvent(events.getHead(), eventTitle, 2)!=null)
+                            PrintEventTitle(eventTitle);
                             break;
                         default:
                             System.out.println("Wrong number, please do it again");
@@ -179,7 +178,7 @@ public class Phonebook {
 
                     String FName = input.next();
 
-                    contacts.PrintByFirstName(FName);
+                    PrintByFirstName(FName);
                     break;
                 case 7:
                     PrintAllEvent();
@@ -224,7 +223,7 @@ public class Phonebook {
      * }
      * }
      */
-    public void PrintAllEvent() {
+    private void PrintAllEvent() {
         if (events.empty())
             return;
         events.findfirst();
@@ -235,5 +234,53 @@ public class Phonebook {
         System.out.println(events.retrieve().toString());
 
     }
+    
+    private String Firstname(String name) {
+        String Firstname = "";
+        for (int i = 0; i < name.length(); i++) {
+            if (name.substring(i, i) != " ")
+                Firstname += name.substring(i, i);
+            else
+                break;
+        }
+        return Firstname;
+    }
+
+    private void PrintByFirstName(String Name) {
+        if (contacts.empty())
+            System.out.println("No Contacts found!");
+
+        contacts.findfirst();
+        while (contacts.last() ==false) {
+                    if ((Firstname(Name).compareToIgnoreCase(Firstname((contacts.retrieve()).getContactName()))) == 0)
+                    System.out.println(contacts.retrieve().toString() + "\n");
+                    
+                    contacts.findnext();
+        }
+        if ((Firstname(Name).compareToIgnoreCase(Firstname((contacts.retrieve()).getContactName()))) == 0)
+        System.out.println(contacts.retrieve().toString() + "\n");
+
+    }
+
+    private void PrintEventTitle(String title){/*The Phonebook class should have methods for printing all contacts that share an event as well as all contacts that share the first name*/
+    if (events.empty())
+            System.out.println("No Contacts found!");
+
+        events.findfirst();
+        while (events.last() ==false) {
+            if (events.retrieve().getEventTitle().equalsIgnoreCase(title)){//it not logical to have same firstname and Event tile since there is only one contact in each event
+                   System.out.println(events.retrieve().toString());
+            }       
+                    events.findnext();
+        }
+        if (events.retrieve().getEventTitle().equalsIgnoreCase(title)){//it not logical to have same firstname and Event tile since there is only one contact in each event
+                   System.out.println(events.retrieve().toString());
+            }  
+
+    }
+    
+
+
+
 
 }
