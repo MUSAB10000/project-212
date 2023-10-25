@@ -84,6 +84,9 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) e);
             return "Event added successfully!";
         }
+        if (dateTimeConflict(head, e))  // new edit
+            return "Event Not Adeed! DateAndTime Conflict";
+
         if (head.getData() instanceof Event && e.compareTo(((Event) head.getData())) < 0) {
             Node<T> temp = head;
             head = new Node<T>((T) e);
@@ -91,8 +94,6 @@ public class LinkedList<T> { // start LinkedList
             return "Event added successfully!";
         }
         Node<T> newNode = new Node<T>((T) e);
-        if (dateTimeConflict(head, e))
-            return "Event Not Adeed! DateAndTime Conflict";
         current = head;
         Node<T> prev = null;
         while (current != null) {

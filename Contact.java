@@ -74,6 +74,7 @@ public class Contact implements Comparable<Contact> {
     public int compareTo(Contact other) {
         return this.ContactName.compareTo(other.ContactName);
     }
+    
     public String toString() {  
         return "\nName: " + ContactName +  
                     "\nPhone Number: " + PhoneNumber +  

@@ -160,6 +160,7 @@ public class Phonebook {
                             contactName = input.next();
                             contactName += input.nextLine();
                             Event E = (Event) events.SearchEvent(events.getHead(), contactName, choice2);
+                            if ( E != null)// new edit
                             System.out.println(E.toString());
                             break;
                         case 2:
