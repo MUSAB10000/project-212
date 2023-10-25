@@ -26,8 +26,8 @@ public class Phonebook {
                             "7. Print all events alphabetically\n" +
                             "8. Exit\n");
             System.out.println("Enter your choice:");
-            choice = input.nextInt();//Assuming the user is reasnoable user
-           
+            choice = input.nextInt();// Assuming the user is reasnoable user
+
             switch (choice) {// start big switch
                 case 1:
                     System.out.print("Enter the contact's name: ");
@@ -126,7 +126,8 @@ public class Phonebook {
                         break;
                     }
                     contacts.RemoveContact(phone);
-                    events.RemoveEvent(numberPhon.getContactName());
+                    while (events.SearchEvent(events.getHead(), numberPhon.getContactName(), 1) != null)
+                        events.RemoveEvent(numberPhon.getContactName());
                     break;
                 case 4:
                     System.out.print("Enter event title: ");
@@ -143,9 +144,10 @@ public class Phonebook {
                     location += input.nextLine();
 
                     Contact contact = contacts.SearchContact(contacts.getHead(), contactName, 1);
-                    if (contact == null){
-                    System.out.println("The contact does not exist!");
-                        break;}
+                    if (contact == null) {
+                        System.out.println("The contact does not exist!");
+                        break;
+                    }
                     Event event1 = new Event(eventTitle, dateTime, location, contact);
                     events.add(event1);
                     break;
@@ -159,9 +161,8 @@ public class Phonebook {
                             System.out.println("Enter the Contact Name:");
                             contactName = input.next();
                             contactName += input.nextLine();
-                            Event E = (Event) events.SearchEvent(events.getHead(), contactName, choice2);
-                            if ( E != null)// new edit
-                            System.out.println(E.toString());
+                            if (events.SearchEvent(events.getHead(), contactName, 1) != null)
+                                PrintEventTitle(contactName);
                             break;
                         case 2:
                             System.out.println("Enter the event title:");
@@ -187,10 +188,10 @@ public class Phonebook {
                     break;
 
                 case 8:
-                    break;    
+                    break;
                 default:
-                 System.out.println("Wrong number, please do it again");
-                
+                    System.out.println("Wrong number, please do it again");
+
             } // end big switch
         } while (choice != 8);
 
@@ -198,7 +199,7 @@ public class Phonebook {
 
     }
 
-    private void printContact(String s) {//Print all contact that have the same S:Can be Email or Adrress or Birthday.
+    private void printContact(String s) {// Print all contact that have the same S:Can be Email or Adrress or Birthday.
         contacts.findfirst();
         while (contacts.last() == false) {
             if (contacts.retrieve().getEmail().equalsIgnoreCase(s)
@@ -219,10 +220,9 @@ public class Phonebook {
 
     }
 
-    
     private void PrintAllEvent() {
-        if (events.empty()){
-          System.out.println("There is No Event right now");
+        if (events.empty()) {
+            System.out.println("There is No Event right now");
             return;
         }
         events.findfirst();
@@ -234,7 +234,8 @@ public class Phonebook {
 
     }
 
-    private String Firstname(String name) {//Takes full name then Substring the last giving a result of first name only, Assuming what after the space of the full name is last name
+    private String Firstname(String name) {// Takes full name then Substring the last giving a result of first name
+                                           // only, Assuming what after the space of the full name is last name
         String Firstname = "";
         for (int i = 0; i < name.length(); i++) {
             if (name.substring(i, i) != " ")
@@ -245,7 +246,7 @@ public class Phonebook {
         return Firstname;
     }
 
-    private void PrintByFirstName(String Name) {//Print the Contact of the same FirstName
+    private void PrintByFirstName(String Name) {// Print the Contact of the same FirstName
         if (contacts.empty())
             System.out.println("No Contacts found!");
 
@@ -261,18 +262,20 @@ public class Phonebook {
 
     }
 
-    private void PrintEventTitle(String title) {//Print the Event that has the same Title
+    private void PrintEventTitle(String title) {// Print the Event that has the same Title
         if (events.empty())
             System.out.println("No Contacts found!");
 
         events.findfirst();
         while (events.last() == false) {
-            if (events.retrieve().getEventTitle().equalsIgnoreCase(title)) {
+            if (events.retrieve().getEventTitle().equalsIgnoreCase(title)
+                    || events.retrieve().getContactName().equalsIgnoreCase(title)) {
                 System.out.println(events.retrieve().toString());
             }
             events.findnext();
         }
-        if (events.retrieve().getEventTitle().equalsIgnoreCase(title)) {
+        if (events.retrieve().getEventTitle().equalsIgnoreCase(title)
+                || events.retrieve().getContactName().equalsIgnoreCase(title)) {
             System.out.println(events.retrieve().toString());
         }
 

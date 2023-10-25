@@ -84,7 +84,7 @@ public class LinkedList<T> { // start LinkedList
             head = new Node<T>((T) e);
             return "Event added successfully!";
         }
-        if (dateTimeConflict(head, e))  // new edit
+        if (dateTimeConflict(head, e)) // new edit
             return "Event Not Adeed! DateAndTime Conflict";
 
         if (head.getData() instanceof Event && e.compareTo(((Event) head.getData())) < 0) {
@@ -117,14 +117,18 @@ public class LinkedList<T> { // start LinkedList
 
     }
 
-    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {//check if number or name have been used before in contact.
+    private boolean existForNumAndName(Node<T> head, String contactName, String phoneNumber) {// check if number or name
+                                                                                              // have been used before
+                                                                                              // in contact.
         if (SearchContact(head, contactName, 1) == null && SearchContact(head, phoneNumber, 2) == null)
             return false;
         else
             return true;
     }
 
-    private boolean dateTimeConflict(Node<T> head, Event event) {//cheack if there is an event that has the same DateAndTime and the same name, Assuming the name of contact is unique.
+    private boolean dateTimeConflict(Node<T> head, Event event) {// cheack if there is an event that has the same
+                                                                 // DateAndTime and the same name, Assuming the name of
+                                                                 // contact is unique.
         current = head;
         while (current != null) {
             if (current.getData() instanceof Event) {
@@ -257,7 +261,6 @@ public class LinkedList<T> { // start LinkedList
     public T SearchEvent(Node<T> head, String name, int num) { // start PrintEvent
 
         if (head == null) { // start if
-            System.out.println("Event not found!");
             return null;
         } // end if
         current = head;
@@ -266,7 +269,6 @@ public class LinkedList<T> { // start LinkedList
                 while (current != null) {// start while
                     if (current.data instanceof Event && ((Event) current.data).getContactName().equals(name)) {// start
                                                                                                                 // if
-                        System.out.println("Event found!");
                         return current.data;
                     } // end if
                     current = current.getNext();
@@ -287,6 +289,6 @@ public class LinkedList<T> { // start LinkedList
 
         return null;
 
-    } 
+    }
 
 } // end LinkedList
