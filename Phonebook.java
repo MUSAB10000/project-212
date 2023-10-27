@@ -161,8 +161,8 @@ public class Phonebook {
                             System.out.println("Enter the Contact Name:");
                             contactName = input.next();
                             contactName += input.nextLine();
-                            if (events.SearchEvent(events.getHead(), contactName, 1) != null)
-                                PrintEventTitle(contactName);
+                            Event E = (Event) events.SearchEvent(events.getHead(), contactName, choice2);
+                            System.out.println(E.toString());
                             break;
                         case 2:
                             System.out.println("Enter the event title:");
@@ -268,14 +268,12 @@ public class Phonebook {
 
         events.findfirst();
         while (events.last() == false) {
-            if (events.retrieve().getEventTitle().equalsIgnoreCase(title)
-                    || events.retrieve().getContactName().equalsIgnoreCase(title)) {
+            if (events.retrieve().getEventTitle().equalsIgnoreCase(title)) {
                 System.out.println(events.retrieve().toString());
             }
             events.findnext();
         }
-        if (events.retrieve().getEventTitle().equalsIgnoreCase(title)
-                || events.retrieve().getContactName().equalsIgnoreCase(title)) {
+        if (events.retrieve().getEventTitle().equalsIgnoreCase(title)) {
             System.out.println(events.retrieve().toString());
         }
 
